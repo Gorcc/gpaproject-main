@@ -331,3 +331,46 @@ form .entry {
 a {
   cursor: pointer;
 }
+
+.panelForm {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.formInput {
+  border: 4px solid transparent;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  color: white;
+  background-color: #434a52;
+  width: 16rem;
+  font-size: 1.5rem;
+}
+
+.panelForm button {
+  border: 4px solid #085593;
+  border-radius: 5px;
+  color: white;
+  background-color: #085593;
+  font-weight: bold;
+  width: 16rem;
+}
+.panelForm input {
+  margin-right: 2.2rem;
+  font-size: 1rem;
+}
+
+.panelForm i {
+  margin-right: 0.5rem;
+}
+
+.panelForm select {
+  color: white;
+  width: 16rem;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+}

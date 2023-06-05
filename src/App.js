@@ -7,6 +7,7 @@ import Personal from "./Personal";
 import UserManagement from "./UserManagement";
 
 import "./App.css";
+import UserList from "./userList";
 
 const App = () => {
   const [options, setOptions] = useState(() => {
@@ -18,8 +19,9 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route index element={<Layout />} />
+          <Route index element={<UserList />} />
           <Route path="layout" element={<Layout />} />
+          <Route path="userlist" element={<UserList />} />
 
           <Route path="usermanagement" element={<UserManagement />} />
           <Route

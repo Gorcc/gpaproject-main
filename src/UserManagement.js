@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { saveUser, getUsers, clearUsers } from "./userStorage";
-import { Navigate, useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { decryptDES } from "./encryption";
 
 const UserManagement = () => {
   const [name, setName] = useState("");
@@ -28,7 +29,6 @@ const UserManagement = () => {
   };
 
   const users = getUsers();
-  const navigate = useNavigate();
 
   return (
     <div className="panelDiv">
@@ -36,11 +36,7 @@ const UserManagement = () => {
         <h1>Logged in as a Sysadmin</h1>
         <h2>User Management</h2>
         <h1>Sign a new user</h1>
-        <a href="#">
-          <a href="#">
-            <Link to="/layout">Go to login screen</Link>
-          </a>
-        </a>
+        <Link to="/layout">Go to login screen</Link>
       </div>
       <form className="panelForm" onSubmit={handleSaveUser}>
         <label>
@@ -82,14 +78,14 @@ const UserManagement = () => {
         <button onClick={handleClearUsers}>Clear Users</button>
       </form>
 
-      {users.length > 0 ? (
+      {users && users.length > 0 ? (
         <div>
           <h3>Current Users:</h3>
           <ul>
             {users.map((user, index) => (
               <li key={index}>
                 <strong>Name:</strong> {user.name}, <strong>Password:</strong>{" "}
-                {user.password}, <strong>Permissions:</strong>{" "}
+                {decryptDES(user.password)}, <strong>Permissions:</strong>{" "}
                 {user.permissions}
               </li>
             ))}

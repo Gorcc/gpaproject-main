@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Redirect,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import GPACalculator from "./GPACalculator";
 import Personal from "./Personal";
+import UserManagement from "./UserManagement";
 import { getUsers } from "./userStorage";
+import { encryptDES, decryptDES } from "./encryption"; // Updated import statement
+
+const secretKey = "MySecretKey123";
 
 const Layout = () => {
   const navigate = useNavigate();
@@ -22,7 +20,9 @@ const Layout = () => {
     const users = getUsers();
 
     const user = users.find(
-      (user) => user.name === username && user.password === password
+      (user) =>
+        user.name === username &&
+        decryptDES(user.password, secretKey) === password
     );
 
     if (user) {

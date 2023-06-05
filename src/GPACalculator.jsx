@@ -97,6 +97,10 @@ const GPACalculator = ({ options }) => {
           <a href="#">
             <Link to="/layout">Go to login screen</Link>
           </a>
+          <br />
+          <a href="#">
+            <Link to="/userlist">Check the users</Link>
+          </a>
         </div>
         <div>
           <h3>Total GPA</h3>

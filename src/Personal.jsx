@@ -36,6 +36,11 @@ const Personal = ({ setOptions }) => {
     setSelectedValue(e.target.value);
   };
 
+  const handleDeleteAllCourses = () => {
+    setCourses([]);
+    localStorage.removeItem("courses");
+  };
+
   useEffect(() => {
     localStorage.setItem("selectedValue", selectedValue);
   }, [selectedValue]);
@@ -64,6 +69,8 @@ const Personal = ({ setOptions }) => {
           />
         </div>
         <button type="submit">ADD COURSE</button>
+        <br />
+        <button onClick={handleDeleteAllCourses}>DELETE COURSES</button>
       </form>
 
       {courses.length > 0 ? (

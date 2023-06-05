@@ -388,3 +388,14 @@ a {
   display: flex;
   flex-direction: column;
 }
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.userList a {
+  margin: 16px;
+}

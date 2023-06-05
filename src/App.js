@@ -19,7 +19,7 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route index element={<UserList />} />
+          <Route index element={<Layout />} />
           <Route path="layout" element={<Layout />} />
           <Route path="userlist" element={<UserList />} />
 

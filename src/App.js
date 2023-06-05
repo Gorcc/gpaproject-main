@@ -1,27 +1,40 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Layout from "./Layout";
-
-import GPACalculator from "./GPACalculator";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Admin from "./Admin";
-import Personal from "./Personal";
+import Layout from "./Layout";
+import GPACalculator from "./GPACalculator";
 
-function App() {
+import Personal from "./Personal";
+import UserManagement from "./UserManagement";
+
+import "./App.css";
+
+const App = () => {
+  const [options, setOptions] = useState(() => {
+    const storedOptions = localStorage.getItem("options");
+    return storedOptions ? JSON.parse(storedOptions) : [];
+  });
+
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route index element={<Admin />} />
-          <Route path="Layout" element={<Layout />} />
-          <Route path="homepage" element={<GPACalculator />} />
-          <Route path="gpacalculator" element={<GPACalculator />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="personal" element={<Personal />} />
+          <Route index element={<Layout />} />
+          <Route path="layout" element={<Layout />} />
+
+          <Route path="usermanagement" element={<UserManagement />} />
+          <Route
+            path="gpacalculator"
+            element={<GPACalculator options={options} />}
+          />
+          <Route path="admin" element={<UserManagement />} />
+          <Route
+            path="personal"
+            element={<Personal setOptions={setOptions} />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;

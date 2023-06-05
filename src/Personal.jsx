@@ -1,38 +1,83 @@
-import React from "react";
-import "./App.css";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-const Personal = () => {
+const Personal = ({ setOptions }) => {
+  const [selectedValue, setSelectedValue] = useState(() => {
+    const storedSelectedValue = localStorage.getItem("selectedValue");
+    return storedSelectedValue ? storedSelectedValue : "";
+  });
+
+  const [courses, setCourses] = useState(() => {
+    const storedCourses = localStorage.getItem("courses");
+    return storedCourses ? JSON.parse(storedCourses) : [];
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (selectedValue.trim() !== "") {
+      setOptions((prevOptions) => {
+        const newOptions = [...prevOptions, selectedValue];
+        localStorage.setItem("options", JSON.stringify(newOptions));
+        return newOptions;
+      });
+
+      setCourses((prevCourses) => {
+        const newCourses = [...prevCourses, selectedValue];
+        localStorage.setItem("courses", JSON.stringify(newCourses));
+        return newCourses;
+      });
+
+      setSelectedValue("");
+    }
+  };
+
+  const handleChange = (e) => {
+    setSelectedValue(e.target.value);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("selectedValue", selectedValue);
+  }, [selectedValue]);
+
+  const navigate = useNavigate();
+
   return (
     <div className="panelDiv">
-      <h2>Logged in as Staff</h2>
-      <h2>Student records</h2>
-      <div className="links">
+      <div className="texts">
+        <h1>Logged in as a Personal</h1>
+        <h2>Add a new course to students</h2>
         <a href="#">
           <Link to="/layout">Go to login screen</Link>
         </a>
-        <a href="#">Full student records</a>
       </div>
-      <form className="panelForm" action="">
+      <form className="panelForm" onSubmit={handleSubmit}>
         <div>
-          <i class="fa-solid fa-users"></i>
+          <i className="fa-solid fa-users"></i>
           <input
             className="formInput"
             type="text"
             name="id"
-            placeholder="Username"
+            placeholder="Course Name"
+            value={selectedValue}
+            onChange={handleChange}
           />
         </div>
-
-        <select className="formInput" name="" id="">
-          <option value="4">CMPE342</option>
-          <option value="4">CMPE455</option>
-          <option value="4">CMPE448</option>
-          <option value="4">CMPE224</option>
-          <option value="4">CMPE226</option>
-        </select>
-        <button type="submit">ADD COURSE TO USER</button>
+        <button type="submit">ADD COURSE</button>
       </form>
+
+      {courses.length > 0 ? (
+        <div>
+          <h3>Current Courses:</h3>
+          <ul>
+            {courses.map((course, index) => (
+              <li key={index}>{course}</li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p>No courses found.</p>
+      )}
     </div>
   );
 };

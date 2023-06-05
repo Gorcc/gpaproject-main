@@ -1,61 +1,96 @@
-import React from "react";
-import GPACalculator from "./GPACalculator";
+import React, { useState } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
-  redirect,
+  Redirect,
   useNavigate,
 } from "react-router-dom";
+import GPACalculator from "./GPACalculator";
+import Personal from "./Personal";
+import { getUsers } from "./userStorage";
 
 const Layout = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+
+    const users = getUsers();
+
+    const user = users.find(
+      (user) => user.name === username && user.password === password
+    );
+
+    if (user) {
+      setLoginError(false);
+      const { permissions } = user;
+
+      switch (permissions) {
+        case "personal":
+          navigate("/personal");
+          break;
+        case "sysadmin":
+          navigate("/usermanagement");
+          break;
+        default:
+          navigate("/gpacalculator");
+          break;
+      }
+    } else {
+      setLoginError(true);
+    }
+  };
+
   return (
     <div className="align">
-      <div class="grid">
-        <form class="form login">
-          <div class="form__field">
-            <label for="login__username">
-              <i class="fa-solid fa-users"></i>
-              <svg class="icon"></svg>
-              <span class="hidden">Username</span>
+      <h1>CMPE455 - Term Project</h1>
+      <div className="grid">
+        <form className="form login" onSubmit={handleSignIn}>
+          <div className="form__field">
+            <label htmlFor="login__username">
+              <i className="fa-solid fa-users"></i>
+              <svg className="icon"></svg>
+              <span className="hidden">Username</span>
             </label>
             <input
-              autocomplete="username"
+              autoComplete="username"
               id="login__username"
               type="text"
               name="username"
-              class="form__input"
+              className="form__input"
               placeholder="Username"
               required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
-          <div class="form__field">
-            <label for="login__password">
-              <i class="fa-solid fa-lock"></i>
-              <svg class="icon"></svg>
-              <span class="hidden">Password</span>
+          <div className="form__field">
+            <label htmlFor="login__password">
+              <i className="fa-solid fa-lock"></i>
+              <svg className="icon"></svg>
+              <span className="hidden">Password</span>
             </label>
             <input
               id="login__password"
               type="password"
               name="password"
-              class="form__input"
+              className="form__input"
               placeholder="Password"
               required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          <div class="form__field">
-            <input
-              type="submit"
-              value="Sign In"
-              onClick={(e) => {
-                e.preventDefault();
-                return navigate("/homepage");
-              }}
-            />
+          {loginError && <p className="error">Invalid username or password</p>}
+
+          <div className="form__field">
+            <input type="submit" value="Sign In" />
           </div>
         </form>
       </div>

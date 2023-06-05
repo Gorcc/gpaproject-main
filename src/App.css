@@ -279,9 +279,18 @@ form {
   align-items: center;
 }
 
+.gpaforms select {
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  border: 4px solid #085593;
+  width: 350px;
+  color: black;
+}
+
 .gpaforms form input {
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   margin: 5px;
   border: 4px solid #085593;
   width: 350px;
@@ -339,7 +348,9 @@ a {
 }
 
 .formInput {
-  border: 4px solid transparent;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
   margin-bottom: 1rem;
   border-radius: 5px;
   color: white;
@@ -357,7 +368,6 @@ a {
   width: 16rem;
 }
 .panelForm input {
-  margin-right: 2.2rem;
   font-size: 1rem;
 }
 
@@ -371,6 +381,10 @@ a {
 }
 
 .links {
+  display: flex;
+  flex-direction: column;
+}
+.panelForm label {
   display: flex;
   flex-direction: column;
 }
